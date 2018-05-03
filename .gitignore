@@ -2,6 +2,9 @@
 *.pyc
 build/
 dist/
+.eggs/
 Pipfile.lock
-.pytest_cache
+__pycache__
+.pytest_cache/
 testfile.csv
+.tox

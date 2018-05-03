@@ -1,12 +1,9 @@
+from __future__ import absolute_import
+from .util import spaces
+from .csv import select
 import click
-import csv
-import os
-import sys
-from operator import itemgetter
-
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
-
 
 class Columns(click.ParamType):
     name = 'columns'
@@ -61,22 +58,6 @@ class Separator(click.ParamType):
         return value.encode('utf-8').decode('unicode_escape')
 
 
-def dslice(x, indexes):
-    """Slice with discontinuous indexes"""
-    if not x or not indexes:
-        return []
-    subx = itemgetter(*indexes)(x)
-    if len(indexes) == 1:
-        return [subx]
-    else:
-        return list(subx)
-
-
-def spaces(text):
-    """Replace all whitespace with single spaces"""
-    return ' '.join(text.split())
-
-
 @click.command(context_settings=CONTEXT_SETTINGS)
 @click.option('-c', '--columns', type=Columns(),
               help=spaces("""Comma-separated list of 1-based column indexes to
@@ -98,44 +79,6 @@ def spaces(text):
 @click.argument('input', type=click.File())
 @click.argument('output', type=click.File(mode='w', atomic=True))
 @click.version_option()
-def cli(columns, headers, sep, output_sep, keep, input, output):
-    """A tool to delete columns from a CSV file."""
-    reader = csv.reader(input, delimiter=str(sep))
-    try:
-        header_fields = next(reader)
-    except StopIteration:
-        return
-
-    colnum = len(header_fields)
-    columns0 = []
-
-    if headers:
-        header_lookup = dict((h, i) for i, h in enumerate(header_fields))
-        for h in headers:
-            try:
-                columns0.append(header_lookup[h])
-            except KeyError:
-                pass
-    elif columns:
-        # column indexes come from user as 1-based
-        # - convert to 0-based indexing
-        # - adjust negative indices
-        # - check range
-        for c in columns:
-            if c > 0 and c <= colnum:
-                columns0.append(c - 1)
-            elif c < 0 and c >= -colnum:
-                columns0.append(c + colnum)
-        columns0 = [c for c in columns0 if c < colnum]
-
-    if not keep:
-        columnsi = list(range(colnum))
-        columns0 = [i for i in columnsi if i not in columns0]
-
-    if columns0:
-        if output_sep is None:
-            output_sep = sep
-        writer = csv.writer(output, delimiter=str(output_sep), lineterminator=os.linesep)
-        writer.writerow(dslice(header_fields, columns0))
-        for row in reader:
-            writer.writerow(dslice(row, columns0))
+def main(columns, headers, sep, output_sep, keep, input, output):
+    """A tool to drop or keep columns from a CSV file."""
+    select(columns, headers, sep, output_sep, keep, input, output)

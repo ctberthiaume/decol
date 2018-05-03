@@ -8,6 +8,7 @@ name = "pypi"
 
 [dev-packages]
 pytest = "*"
+pur = "*"
 
 [requires]
 python_version = "3.6"

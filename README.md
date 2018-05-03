@@ -1,8 +1,18 @@
+decol
+=====
+
+A tool to drop or keep columns from a CSV file.
+
+* columns can be specified as 1-based integer indexes or column headers
+* multiple indexes or headers can be specified as a comma-separated list
+* negative indexes are supported
+* index ranges are also supported, e.g. 1:2 for the first two column
+
 ```
 $ decol -h
 Usage: decol [OPTIONS] INPUT OUTPUT
 
-  A tool to delete columns from a CSV file.
+  A tool to drop or keep columns from a CSV file.
 
 Options:
   -c, --columns COLUMNS       Comma-separated list of 1-based column indexes
