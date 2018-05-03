@@ -1,0 +1,7 @@
+*.egg-info/
+*.pyc
+build/
+dist/
+Pipfile.lock
+.pytest_cache
+testfile.csv
