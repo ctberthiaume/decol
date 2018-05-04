@@ -89,7 +89,7 @@ def test_drop_last_negative_index(runner, input_text):
 def test_drop_nonexistent_index(runner, input_text):
     result = runner.invoke(decol.cli.main, ['-c', '4', '-', '-'], input=input_text)
     assert result.exit_code == 0
-    assert result.output == input_text.replace('\n', os.linesep)
+    assert result.output == input_text
 
 def test_keep_first(runner, input_text):
     result = runner.invoke(decol.cli.main, ['-c', '1', '--keep', '-', '-'], input=input_text)
@@ -151,7 +151,7 @@ def test_drop_multi_discontinuous_header(runner, input_text):
 def test_drop_nonexistent_header(runner, input_text):
     result = runner.invoke(decol.cli.main, ['-H', 'head4', '-', '-'], input=input_text)
     assert result.exit_code == 0
-    assert result.output == input_text.replace('\n', os.linesep)
+    assert result.output == input_text
 
 def test_keep_first_header(runner, input_text):
     result = runner.invoke(decol.cli.main, ['-H', 'head1', '--keep', '-', '-'], input=input_text)
@@ -217,4 +217,4 @@ def test_keep_range_of_one(runner, input_text):
 def test_keep_range_with_single(runner, input_text):
     result = runner.invoke(decol.cli.main, ['-c', '1:2,3', '--keep', '-', '-'], input=input_text)
     assert result.exit_code == 0
-    assert result.output == input_text.replace('\n', os.linesep)
+    assert result.output == input_text
