@@ -9,7 +9,7 @@ def runner():
 
 @pytest.fixture
 def input_text():
-    return u'head1,head2,head3\na,b,c\n1,2,3\n'.replace('\n', os.linesep)
+    return os.linesep.join([u'head1,head2,head3', u'a,b,c', u'1,2,3']) + os.linesep
 
 # ----------
 # Unit tests
