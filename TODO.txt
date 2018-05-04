@@ -1,8 +1,0 @@
-- does this work on windows (different newlines, different file open behavior
-  for binary/text)?
-- does this work with Python 2 and 3 for both Linux/MacOS and Windows,
-  related to above?
-- csv.Reader says the file should be opened with newline='' for Python 3,
-  presumably because the module handles newlines itself. We're using click.File
-  to handle file opening. Does it do the right thing on both Linux/MacOS and
-  Windows?
