@@ -4,7 +4,7 @@ import re
 import sys
 
 
-VERSIONFILE="decol/_version.py"
+VERSIONFILE="src/decol/_version.py"
 verstrline = open(VERSIONFILE, "rt").read()
 VSRE = r"^__version__ = ['\"]([^'\"]*)['\"]"
 mo = re.search(VSRE, verstrline, re.M)
@@ -37,13 +37,13 @@ setup(
     version=verstr,
     author='Chris T. Berthiaume',
     author_email='chrisbee@uw.edu',
-    license='LICENSE.txt',
+    license='MIT',
     description='A tool to drop or keep columns from a CSV file.',
     long_description=open('README.md', 'r').read(),
-    long_description_content_type='text/markdown',
     url=url,
     download_url=download_url,
-    packages=find_packages(),
+    packages=find_packages(where='src'),
+    package_dir={'': 'src'},
     include_package_data=True,
     platforms='any',
     classifiers=[
@@ -53,13 +53,12 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6'
+        'Programming Language :: Python :: 3'
     ],
     keywords = ['csv', 'command-line'],
-    python_requires='>=2.6, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*, <4',
+    python_requires='>=2.6, <4',
     install_requires=[
-        'Click'
+        'click'
     ],
     tests_require=['pytest'],
     cmdclass = {'test': PyTest},
