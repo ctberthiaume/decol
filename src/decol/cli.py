@@ -1,5 +1,5 @@
 from __future__ import absolute_import
-from .util import spaces
+from .util import spaces, suppress_sigpipe
 from .csv import select
 import click
 
@@ -79,6 +79,7 @@ class Separator(click.ParamType):
 @click.argument('input', type=click.File())
 @click.argument('output', type=click.File(mode='w', atomic=True))
 @click.version_option()
+@suppress_sigpipe
 def main(columns, headers, sep, output_sep, keep, input, output):
     """A tool to drop or keep columns from a CSV file."""
     select(columns, headers, sep, output_sep, keep, input, output)
