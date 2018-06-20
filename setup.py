@@ -40,6 +40,7 @@ setup(
     license='MIT',
     description='A tool to drop or keep columns from a CSV file.',
     long_description=open('README.md', 'r').read(),
+    long_description_content_type='text/markdown',
     url=url,
     download_url=download_url,
     packages=find_packages(where='src'),
